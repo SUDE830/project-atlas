@@ -61,7 +61,9 @@ def require_password() -> None:
     )
     password = st.text_input("Uygulama parolası", type="password")
     if st.button("Giriş Yap", width="stretch"):
-        if hmac.compare_digest(password, str(configured_password)):
+        entered_password = password.strip()
+        expected_password = str(configured_password).strip()
+        if hmac.compare_digest(entered_password, expected_password):
             st.session_state["atlas_authenticated"] = True
             st.rerun()
         else:
